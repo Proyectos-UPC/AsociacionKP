@@ -1,0 +1,4 @@
+/* global layout only — styles van en src/styles.css */
+main {
+  min-height: calc(100vh - 64px);
+}
