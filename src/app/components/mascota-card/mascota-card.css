@@ -1,0 +1,11 @@
+.mcard { background:#fff; border-radius:var(--radius-lg); border:1px solid var(--gray-100); overflow:hidden; transition:box-shadow .2s,transform .2s; display:flex; flex-direction:column; }
+.mcard:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.mcard-img { background:var(--brand-light); height:130px; display:flex; align-items:center; justify-content:center; position:relative; }
+.mcard-emoji { font-size:56px; }
+.mcard-img .badge { position:absolute; top:10px; right:10px; }
+.mcard-body { padding:1rem 1.1rem; flex:1; display:flex; flex-direction:column; gap:6px; }
+.mcard-name { font-size:17px; font-weight:700; }
+.mcard-meta { display:flex; flex-wrap:wrap; gap:8px; font-size:12px; color:var(--gray-600); }
+.mcard-desc { font-size:13px; color:var(--gray-600); flex:1; }
+.mcard-btn { width:100%; justify-content:center; margin-top:8px; font-size:13px; padding:8px; }
+.badge-aprobado { background:var(--purple-light); color:var(--purple); }
