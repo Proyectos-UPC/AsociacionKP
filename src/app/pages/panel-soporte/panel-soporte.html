@@ -1,0 +1,83 @@
+<div class="soporte-page container">
+  <div class="soporte-header">
+    <div>
+      <div class="soporte-eyebrow">🛡 AsociacionKP</div>
+      <h1>Panel de soporte</h1>
+      <p>Valida los informes de hallazgo enviados por la comunidad.</p>
+    </div>
+    <div class="stats-mini">
+      <div class="stat-mini stat-warn">
+        <span class="stat-n">{{ pendientes.length }}</span>
+        <span class="stat-l">Pendientes</span>
+      </div>
+      <div class="stat-mini stat-ok">
+        <span class="stat-n">{{ resueltos.length }}</span>
+        <span class="stat-l">Resueltos</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast toast-ok" *ngIf="accionExitosa === 'aprobado'">✅ Caso aprobado — mascota marcada como reunida</div>
+  <div class="toast toast-err" *ngIf="accionExitosa === 'rechazado'">❌ Informe rechazado — mascota sigue en búsqueda</div>
+
+  <div class="loader" *ngIf="cargando">Cargando informes...</div>
+
+  <section *ngIf="!cargando">
+    <h2 class="section-label">Informes pendientes de validación</h2>
+
+    <div class="empty-pendiente" *ngIf="pendientes.length === 0">
+      <div class="empty-icon">🎉</div>
+      <p>Sin pendientes. ¡Todo al día!</p>
+    </div>
+
+    <div class="informe-list" *ngIf="pendientes.length > 0">
+      <div class="informe-item card" *ngFor="let inf of pendientes">
+        <div class="informe-left">
+          <div class="inf-mascota-emoji">🐶</div>
+          <div>
+            <div class="inf-nombre">{{ getMascota(inf.mascotaId)?.nombre || 'Mascota #'+inf.mascotaId }}</div>
+            <div class="inf-meta">
+              🦴 {{ getMascota(inf.mascotaId)?.raza }} &nbsp;|&nbsp;
+              📍 {{ getMascota(inf.mascotaId)?.distrito }}
+            </div>
+          </div>
+        </div>
+        <div class="informe-body">
+          <div class="inf-label">Descripción del hallazgo</div>
+          <p class="inf-desc">{{ inf.descripcion }}</p>
+          <div class="inf-label">Contacto quien encontró</div>
+          <p class="inf-contact">📞 {{ inf.contacto }}</p>
+          <div class="inf-label">Fecha del informe</div>
+          <p class="inf-fecha">🗓 {{ inf.fecha }}</p>
+        </div>
+        <div class="informe-actions">
+          <button class="btn btn-teal" (click)="aprobar(inf.mascotaId)">✅ Aprobar — reunida</button>
+          <button class="btn btn-outline btn-danger" (click)="rechazar(inf.mascotaId)">❌ Rechazar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="!cargando && resueltos.length > 0" style="margin-top:2.5rem;">
+    <h2 class="section-label">Historial de casos resueltos</h2>
+    <div class="informe-list">
+      <div class="informe-item informe-resuelta card" *ngFor="let inf of resueltos">
+        <div class="informe-left">
+          <div class="inf-mascota-emoji">🐶</div>
+          <div>
+            <div class="inf-nombre">{{ getMascota(inf.mascotaId)?.nombre || 'Mascota #'+inf.mascotaId }}</div>
+            <div class="inf-meta">{{ getMascota(inf.mascotaId)?.distrito }}</div>
+          </div>
+        </div>
+        <div class="informe-body">
+          <p class="inf-desc">{{ inf.descripcion }}</p>
+        </div>
+        <div class="informe-actions">
+          <span class="badge" [class.badge-encontrado]="inf.estado==='aprobado'" [class.badge-buscado]="inf.estado==='rechazado'">
+            {{ inf.estado === 'aprobado' ? 'Aprobado ✓' : 'Rechazado' }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
