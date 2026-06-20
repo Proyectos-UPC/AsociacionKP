@@ -1,0 +1,74 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <span class="hero-eyebrow">🐾 AsociacionKP</span>
+      <h1>Ayuda a reunir<br><span class="hero-accent">mascotas con sus familias</span></h1>
+      <p class="hero-sub">Plataforma centralizada para reportar, buscar y gestionar el reencuentro de perros perdidos o abandonados en el Perú.</p>
+      <div class="hero-actions">
+        <a routerLink="/registro" class="btn btn-primary">Reportar mascota perdida</a>
+        <a routerLink="/buscar" class="btn btn-outline">Buscar mascota</a>
+      </div>
+    </div>
+    <div class="hero-illustration">🐕</div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="container stats-grid">
+    <div class="stat"><span class="stat-num">{{ stats.buscados }}</span><span class="stat-label">En búsqueda</span></div>
+    <div class="stat"><span class="stat-num">{{ stats.encontrados }}</span><span class="stat-label">Reportes de hallazgo</span></div>
+    <div class="stat stat-success"><span class="stat-num">{{ stats.aprobados }}</span><span class="stat-label">Reunidos ✓</span></div>
+  </div>
+</section>
+
+<section class="steps-section">
+  <div class="container">
+    <h2 class="section-title">¿Cómo funciona?</h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-icon" style="background:var(--brand-light)">📋</div>
+        <h3>1. Registra</h3>
+        <p>Completa el formulario con los datos de tu mascota: nombre, raza, zona y descripción.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon" style="background:var(--amber-light)">🔍</div>
+        <h3>2. Difunde</h3>
+        <p>El caso queda publicado para que cualquier persona pueda encontrarlo.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon" style="background:var(--teal-light)">📝</div>
+        <h3>3. Reporta hallazgo</h3>
+        <p>Quien la encuentre envía un informe con dónde y cómo la encontró.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon" style="background:var(--purple-light)">✅</div>
+        <h3>4. KP valida</h3>
+        <p>El equipo de AsociacionKP revisa y aprueba el caso como reunido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recientes-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Casos recientes</h2>
+      <a routerLink="/buscar" class="btn btn-outline">Ver todos →</a>
+    </div>
+    <div class="cards-grid">
+      <app-mascota-card *ngFor="let m of recientes" [mascota]="m"></app-mascota-card>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <h2>¿Encontraste un perro perdido?</h2>
+        <p>Busca en nuestra base de datos si alguien lo está buscando y envía un informe de hallazgo.</p>
+      </div>
+      <a routerLink="/buscar" class="btn btn-teal">Buscar dueño</a>
+    </div>
+  </div>
+</section>
