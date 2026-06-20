@@ -1,0 +1,108 @@
+<div class="registro-page container">
+
+  <div class="page-header">
+    <h1>🐾 Reportar mascota perdida</h1>
+    <p>Completa el formulario para que tu mascota quede registrada en el sistema de búsqueda.</p>
+  </div>
+
+  <div class="registro-layout" *ngIf="!enviado">
+    <form [formGroup]="form" (ngSubmit)="enviar()" class="form-card card" novalidate>
+
+      <div class="form-section-title">Datos de la mascota</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre de la mascota *</label>
+          <input formControlName="nombre" type="text" placeholder="Ej: Toby">
+          <div class="error-msg" *ngIf="f['nombre'].invalid && f['nombre'].touched">
+            Ingresa el nombre (mínimo 2 caracteres).
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Raza *</label>
+          <select formControlName="raza">
+            <option value="">Selecciona una raza</option>
+            <option *ngFor="let r of razas" [value]="r">{{ r }}</option>
+          </select>
+          <div class="error-msg" *ngIf="f['raza'].invalid && f['raza'].touched">Selecciona la raza.</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Edad aproximada (años) *</label>
+          <input formControlName="anio" type="number" min="0" max="25" placeholder="Ej: 3">
+          <div class="error-msg" *ngIf="f['anio'].invalid && f['anio'].touched">Ingresa la edad (0-25).</div>
+        </div>
+        <div class="form-group">
+          <label>Fecha en que se perdió *</label>
+          <input formControlName="fechaPerdida" type="date">
+          <div class="error-msg" *ngIf="f['fechaPerdida'].invalid && f['fechaPerdida'].touched">Selecciona la fecha.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Distrito donde se perdió *</label>
+        <select formControlName="distrito">
+          <option value="">Selecciona el distrito</option>
+          <option *ngFor="let d of distritos" [value]="d">{{ d }}</option>
+        </select>
+        <div class="error-msg" *ngIf="f['distrito'].invalid && f['distrito'].touched">Selecciona el distrito.</div>
+      </div>
+
+      <div class="form-section-title" style="margin-top:1.5rem;">Descripción y contacto</div>
+
+      <div class="form-group">
+        <label>Descripción *</label>
+        <textarea formControlName="descripcion" rows="3" placeholder="Describe señas particulares: color, collar, tamaño, comportamiento..."></textarea>
+        <div class="error-msg" *ngIf="f['descripcion'].invalid && f['descripcion'].touched">
+          Mínimo 10 caracteres.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Número de contacto (9 dígitos) *</label>
+        <input formControlName="contacto" type="tel" placeholder="Ej: 999123456" maxlength="9">
+        <div class="error-msg" *ngIf="f['contacto'].invalid && f['contacto'].touched">
+          Ingresa un número de 9 dígitos.
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="cargando">
+          <span *ngIf="!cargando">Registrar mascota perdida</span>
+          <span *ngIf="cargando">Enviando...</span>
+        </button>
+      </div>
+    </form>
+
+    <aside class="registro-aside">
+      <div class="tip-card">
+        <div class="tip-icon">💡</div>
+        <h3>Consejos para un buen reporte</h3>
+        <ul>
+          <li>Describe señas únicas: manchas, cicatrices, tipo de collar.</li>
+          <li>Indica la zona exacta donde se vio por última vez.</li>
+          <li>Usa un número de contacto activo.</li>
+          <li>Mientras más detalles, más fácil el reencuentro.</li>
+        </ul>
+      </div>
+      <div class="tip-card tip-card-teal">
+        <div class="tip-icon">📍</div>
+        <h3>Zona de búsqueda</h3>
+        <p>Después de registrar, tu caso aparecerá en el mapa de búsqueda para que otros usuarios puedan ayudarte.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="success-card" *ngIf="enviado">
+    <div class="success-icon">🎉</div>
+    <h2>¡Reporte enviado exitosamente!</h2>
+    <p>Tu mascota ya está registrada en el sistema. El equipo de AsociacionKP y la comunidad podrán ayudarte a encontrarla.</p>
+    <div class="success-actions">
+      <button class="btn btn-outline" (click)="nuevo()">Reportar otra mascota</button>
+      <a routerLink="/buscar" class="btn btn-primary">Ver mascotas buscadas</a>
+    </div>
+  </div>
+
+</div>
