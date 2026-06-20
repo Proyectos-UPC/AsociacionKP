@@ -1,0 +1,64 @@
+<div class="login-page">
+  <div class="login-card">
+
+    <div class="login-header">
+      <div class="login-logo">🐾</div>
+      <h1>PawTrack</h1>
+      <p class="login-sub">Panel de Administración</p>
+      <span class="login-badge">AsociacionKP — Solo personal autorizado</span>
+    </div>
+
+    <form (ngSubmit)="ingresar()" #f="ngForm" novalidate>
+
+      <div class="form-group">
+        <label for="usuario">Usuario</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input
+            id="usuario"
+            type="text"
+            [(ngModel)]="usuario"
+            name="usuario"
+            placeholder="Ingresa tu usuario"
+            required
+            autocomplete="username"
+            [class.input-error]="error">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input
+            id="contrasena"
+            [type]="mostrarContrasena ? 'text' : 'password'"
+            [(ngModel)]="contrasena"
+            name="contrasena"
+            placeholder="Ingresa tu contraseña"
+            required
+            autocomplete="current-password"
+            [class.input-error]="error">
+          <button type="button" class="toggle-pass" (click)="mostrarContrasena=!mostrarContrasena">
+            {{ mostrarContrasena ? '🙈' : '👁️' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="error-box" *ngIf="error">
+        ⚠️ Usuario o contraseña incorrectos. Intenta nuevamente.
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="cargando || !usuario || !contrasena">
+        <span *ngIf="!cargando">Ingresar al panel</span>
+        <span *ngIf="cargando" class="cargando-txt">Verificando...</span>
+      </button>
+
+    </form>
+
+    <div class="login-footer">
+      <a routerLink="/">← Volver al inicio</a>
+    </div>
+
+  </div>
+</div>
