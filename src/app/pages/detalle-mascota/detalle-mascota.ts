@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 import { MascotaService, Mascota } from '../../services/mascota';
 
 @Component({
   selector: 'app-detalle-mascota',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, NgIf],
   templateUrl: './detalle-mascota.html',
   styleUrls: ['./detalle-mascota.css']
 })
@@ -42,7 +43,11 @@ export class DetalleMascota implements OnInit {
   }
 
   get estadoLabel() {
-    const map: any = { buscado: 'En búsqueda', encontrado: 'Hallazgo reportado — pendiente de validación', aprobado: 'Reunido con su familia ✓' };
+    const map: any = {
+      buscado: 'En búsqueda',
+      encontrado: 'Hallazgo reportado — pendiente de validación',
+      aprobado: 'Reunido con su familia ✓'
+    };
     return map[this.mascota?.estado || ''] || '';
   }
 }
