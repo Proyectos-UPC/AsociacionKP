@@ -1,0 +1,124 @@
+<div class="detalle-page container">
+  <a routerLink="/buscar" class="back-link">← Volver a búsqueda</a>
+
+  <div class="loader" *ngIf="cargando">Cargando...</div>
+
+  <div class="not-found" *ngIf="!cargando && !mascota">
+    <div class="empty-icon">😕</div>
+    <h2>Mascota no encontrada</h2>
+    <a routerLink="/buscar" class="btn btn-primary">Volver al buscador</a>
+  </div>
+
+  <div class="detalle-layout" *ngIf="!cargando && mascota">
+    <div class="detalle-main">
+      <div class="mascota-hero card">
+        <div class="mascota-foto">🐶</div>
+        <div class="mascota-info">
+          <div class="mascota-nombre-row">
+            <h1>{{ mascota?.nombre }}</h1>
+            <span class="badge"
+              [class.badge-buscado]="mascota?.estado === 'buscado'"
+              [class.badge-encontrado]="mascota?.estado === 'encontrado'"
+              [class.badge-pendiente]="mascota?.estado === 'aprobado'">
+              {{ estadoLabel }}
+            </span>
+          </div>
+
+          <div class="datos-grid">
+            <div class="dato">
+              <span class="dato-label">Raza</span>
+              <span class="dato-val">{{ mascota?.raza }}</span>
+            </div>
+            <div class="dato">
+              <span class="dato-label">Edad</span>
+              <span class="dato-val">{{ mascota?.anio }} año(s)</span>
+            </div>
+            <div class="dato">
+              <span class="dato-label">Distrito</span>
+              <span class="dato-val">📍 {{ mascota?.distrito }}</span>
+            </div>
+            <div class="dato">
+              <span class="dato-label">Perdido el</span>
+              <span class="dato-val">🗓 {{ mascota?.fechaPerdida }}</span>
+            </div>
+            <div class="dato dato-full">
+              <span class="dato-label">Descripción</span>
+              <span class="dato-val">{{ mascota?.descripcion }}</span>
+            </div>
+            <div class="dato">
+              <span class="dato-label">Contacto dueño</span>
+              <span class="dato-val">📞 {{ mascota?.contacto }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mapa-card card">
+        <h2>📍 Zona aproximada de pérdida</h2>
+        <div class="mapa-placeholder">
+          <div class="mapa-inner">
+            <div class="pin">📌</div>
+            <p>{{ mascota?.distrito }}, Lima — Perú</p>
+            <span class="mapa-sub">El dueño reportó haberlo visto por última vez en este distrito</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="detalle-aside">
+      <div class="informe-card card" *ngIf="mascota?.estado === 'buscado'">
+        <div class="informe-icon">🐾</div>
+        <h2>¿Lo encontraste?</h2>
+        <p>Si tienes información sobre esta mascota, envía un informe al equipo KP para coordinar el reencuentro.</p>
+
+        <div *ngIf="!informeEnviado">
+          <button class="btn btn-primary informe-btn" (click)="mostrarFormulario=!mostrarFormulario">
+            {{ mostrarFormulario ? 'Cancelar' : 'Enviar informe de hallazgo' }}
+          </button>
+
+          <form [formGroup]="informeForm" (ngSubmit)="enviarInforme()" class="informe-form" *ngIf="mostrarFormulario">
+            <div class="form-group">
+              <label>¿Dónde y cómo lo encontraste? *</label>
+              <textarea formControlName="descripcion" rows="3" placeholder="Describe dónde lo viste o lo tienes..."></textarea>
+              <div class="error-msg" *ngIf="f['descripcion'].invalid && f['descripcion'].touched">Mínimo 10 caracteres.</div>
+            </div>
+            <div class="form-group">
+              <label>Tu número de contacto *</label>
+              <input formControlName="contacto" type="tel" placeholder="999123456" maxlength="9">
+              <div class="error-msg" *ngIf="f['contacto'].invalid && f['contacto'].touched">9 dígitos requeridos.</div>
+            </div>
+            <button type="submit" class="btn btn-teal informe-btn">Enviar informe</button>
+          </form>
+        </div>
+
+        <div class="informe-ok" *ngIf="informeEnviado">
+          <div class="informe-ok-icon">✅</div>
+          <h3>¡Informe enviado!</h3>
+          <p>El equipo de AsociacionKP revisará tu reporte y coordinará el reencuentro.</p>
+        </div>
+      </div>
+
+      <div class="estado-card card" *ngIf="mascota?.estado !== 'buscado'">
+        <div *ngIf="mascota?.estado === 'encontrado'">
+          <div class="estado-icon">⏳</div>
+          <h3>Hallazgo en validación</h3>
+          <p>El equipo KP está revisando el informe de hallazgo. Pronto estará reunido con su familia.</p>
+        </div>
+        <div *ngIf="mascota?.estado === 'aprobado'">
+          <div class="estado-icon">🎉</div>
+          <h3>¡Ya fue reunido!</h3>
+          <p>Esta mascota fue encontrada y reunida con su familia gracias a la comunidad.</p>
+        </div>
+      </div>
+
+      <div class="share-card card">
+        <h3>Comparte este caso</h3>
+        <p>Ayuda difundiendo a tus redes. Más ojos, más posibilidades de reunirlos.</p>
+        <div class="share-btns">
+          <button class="btn btn-outline btn-sm">WhatsApp</button>
+          <button class="btn btn-outline btn-sm">Facebook</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
