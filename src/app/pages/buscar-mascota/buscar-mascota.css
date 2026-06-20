@@ -1,0 +1,15 @@
+.buscar-page { padding-bottom: 4rem; }
+.filtros-bar { padding: 1rem 1.25rem; margin-bottom: 1.25rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.filtro-search { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 200px; background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); padding: 0 12px; }
+.filtro-search input { border: none; background: none; padding: 10px 0; font-size: 14px; outline: none; flex: 1; }
+.search-icon { font-size: 16px; }
+.filtros-selects { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.filtros-selects select { padding: 9px 12px; border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); font-size: 13px; background: #fff; color: var(--gray-600); cursor: pointer; }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+.resultados-info { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; font-size: 14px; color: var(--gray-600); }
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+.empty-state { text-align: center; padding: 4rem 2rem; }
+.empty-icon { font-size: 56px; margin-bottom: 1rem; }
+.empty-state h3 { font-size: 18px; font-weight: 700; margin-bottom: 0.5rem; }
+.empty-state p { font-size: 14px; color: var(--gray-600); margin-bottom: 1.5rem; }
+.loader { text-align: center; padding: 3rem; color: var(--gray-400); font-size: 14px; }

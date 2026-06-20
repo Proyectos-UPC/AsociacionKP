@@ -1,0 +1,44 @@
+<div class="buscar-page container">
+  <div class="page-header">
+    <h1>🔍 Buscar mascota</h1>
+    <p>Encuentra mascotas perdidas en tu zona y ayuda a reunirlas con sus familias.</p>
+  </div>
+
+  <div class="filtros-bar card">
+    <div class="filtro-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" [(ngModel)]="busqueda" (ngModelChange)="filtrar()" placeholder="Buscar por nombre o raza...">
+    </div>
+    <div class="filtros-selects">
+      <select [(ngModel)]="filtroEstado" (ngModelChange)="filtrar()">
+        <option value="">Todos los estados</option>
+        <option value="buscado">En búsqueda</option>
+        <option value="encontrado">Encontrado — pendiente</option>
+        <option value="aprobado">Reunido ✓</option>
+      </select>
+      <select [(ngModel)]="filtroDistrito" (ngModelChange)="filtrar()">
+        <option value="">Todos los distritos</option>
+        <option *ngFor="let d of distritos" [value]="d">{{ d }}</option>
+      </select>
+      <button class="btn btn-outline btn-sm" (click)="limpiar()">Limpiar</button>
+    </div>
+  </div>
+
+  <div class="resultados-info">
+    <span>{{ filtradas.length }} mascota(s) encontrada(s)</span>
+    <a routerLink="/registro" class="btn btn-primary btn-sm">+ Reportar pérdida</a>
+  </div>
+
+  <div class="loader" *ngIf="cargando">Cargando mascotas...</div>
+
+  <div class="cards-grid" *ngIf="!cargando && filtradas.length > 0">
+    <app-mascota-card *ngFor="let m of filtradas" [mascota]="m"></app-mascota-card>
+  </div>
+
+  <div class="empty-state" *ngIf="!cargando && filtradas.length === 0">
+    <div class="empty-icon">🐾</div>
+    <h3>No se encontraron mascotas</h3>
+    <p>Prueba con otros filtros o reporta una nueva pérdida.</p>
+    <a routerLink="/registro" class="btn btn-primary">Reportar mascota perdida</a>
+  </div>
+</div>
