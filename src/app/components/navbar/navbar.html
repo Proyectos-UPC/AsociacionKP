@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="nav-inner container">
+    <a routerLink="/" class="brand">
+      <span class="brand-icon">🐾</span>
+      <span class="brand-name">PawTrack</span>
+      <span class="brand-sub">AsociacionKP</span>
+    </a>
+    <div class="nav-links" [class.open]="menuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="menuOpen=false">Inicio</a>
+      <a routerLink="/buscar" routerLinkActive="active" (click)="menuOpen=false">Buscar mascota</a>
+      <a routerLink="/registro" routerLinkActive="active" (click)="menuOpen=false">Reportar pérdida</a>
+      <a routerLink="/soporte" routerLinkActive="active" class="nav-soporte" (click)="menuOpen=false">Panel soporte</a>
+    </div>
+    <button class="menu-btn" (click)="toggleMenu()" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
