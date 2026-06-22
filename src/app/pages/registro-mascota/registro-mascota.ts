@@ -17,7 +17,8 @@ export class RegistroMascota implements OnInit {
   enviado = false;
   cargando = false;
   
-  razas = ['Mestizo', 'Labrador', 'Pug', 'Pitbull', 'Bulldog', 'Otro']; // Ejemplo de razas
+  imagenPreview: string | null = null;
+  razas = ['Mestizo', 'Labrador', 'Pug', 'Pitbull', 'Bulldog', 'Otro'];
   distritos = ['Miraflores','San Isidro','Surco','La Molina','San Borja','Barranco','Chorrillos','Lince','Jesús María','Pueblo Libre','Magdalena','San Miguel'];
 
   constructor(private fb: FormBuilder, private svc: MascotaService) {}
@@ -53,8 +54,20 @@ export class RegistroMascota implements OnInit {
     });
   }
 
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => { this.imagenPreview = e.target?.result as string; };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  quitarFoto() { this.imagenPreview = null; }
+
   nuevo() {
     this.enviado = false;
+    this.imagenPreview = null;
     this.form.reset();
   }
 }

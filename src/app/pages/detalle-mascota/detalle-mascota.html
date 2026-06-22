@@ -55,13 +55,8 @@
 
       <div class="mapa-card card">
         <h2>📍 Zona aproximada de pérdida</h2>
-        <div class="mapa-placeholder">
-          <div class="mapa-inner">
-            <div class="pin">📌</div>
-            <p>{{ mascota?.distrito }}, Lima — Perú</p>
-            <span class="mapa-sub">El dueño reportó haberlo visto por última vez en este distrito</span>
-          </div>
-        </div>
+        <iframe [src]="mapaUrl" class="mapa-iframe" loading="lazy" title="Mapa zona de pérdida"></iframe>
+        <a [href]="mapaExternoUrl" target="_blank" rel="noopener" class="mapa-link">Ver en Google Maps ↗</a>
       </div>
     </div>
 
@@ -98,7 +93,7 @@
         </div>
       </div>
 
-      <div class="estado-card card" *ngIf="mascota?.estado !== 'buscado'">
+      <div class="estado-card card" *ngIf="mascota?.estado === 'encontrado' || mascota?.estado === 'aprobado'">
         <div *ngIf="mascota?.estado === 'encontrado'">
           <div class="estado-icon">⏳</div>
           <h3>Hallazgo en validación</h3>
@@ -118,6 +113,44 @@
           <button class="btn btn-outline btn-sm">WhatsApp</button>
           <button class="btn btn-outline btn-sm">Facebook</button>
         </div>
+      </div>
+
+      <div class="baja-card card" *ngIf="mascota?.estado !== 'baja'">
+        <div class="baja-icon">📋</div>
+        <h3>¿Tu mascota falleció?</h3>
+        <p>Solicita la baja del registro para que no siga apareciendo en búsquedas activas.</p>
+
+        <div *ngIf="!bajaEnviada">
+          <button class="btn btn-outline btn-sm baja-btn" (click)="mostrarFormBaja=!mostrarFormBaja">
+            {{ mostrarFormBaja ? 'Cancelar' : 'Reportar fallecimiento' }}
+          </button>
+
+          <form [formGroup]="bajaForm" (ngSubmit)="enviarBaja()" class="baja-form" *ngIf="mostrarFormBaja">
+            <div class="form-group">
+              <label>Motivo *</label>
+              <select formControlName="motivo">
+                <option value="fallecimiento">Fallecimiento</option>
+                <option value="otro">Otro motivo</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tu número de contacto *</label>
+              <input formControlName="contacto" type="tel" placeholder="999123456" maxlength="9">
+              <div class="error-msg" *ngIf="bf['contacto'].invalid && bf['contacto'].touched">9 dígitos requeridos.</div>
+            </div>
+            <button type="submit" class="btn btn-outline btn-danger btn-sm baja-submit">Enviar solicitud de baja</button>
+          </form>
+        </div>
+
+        <div class="baja-ok" *ngIf="bajaEnviada">
+          <p>✅ Solicitud enviada. El equipo KP procesará la baja del registro.</p>
+        </div>
+      </div>
+
+      <div class="baja-card card baja-procesada" *ngIf="mascota?.estado === 'baja'">
+        <div class="baja-icon">🗂️</div>
+        <h3>Baja procesada</h3>
+        <p>Este registro fue dado de baja y ya no aparece en las búsquedas activas.</p>
       </div>
     </aside>
   </div>

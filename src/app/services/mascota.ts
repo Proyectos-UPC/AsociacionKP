@@ -10,8 +10,16 @@ export interface Mascota {
   distrito: string;
   descripcion: string;
   contacto: string;
-  estado: 'buscado' | 'encontrado' | 'aprobado';
+  estado: 'buscado' | 'encontrado' | 'aprobado' | 'baja';
   fechaRegistro?: string;
+}
+
+export interface SolicitudBaja {
+  mascotaId: string;
+  motivo: string;
+  contacto: string;
+  fecha: string;
+  estado: 'pendiente' | 'procesado';
 }
 
 export interface Informe {
@@ -31,6 +39,8 @@ export class MascotaService {
     { id: '3', nombre: 'Rocky', raza: 'Mestizo',           anio: 5, fechaPerdida: '2024-05-01', distrito: 'Surco',      descripcion: 'Color negro, sin collar',         contacto: '999555666', estado: 'encontrado', fechaRegistro: '2024-05-01' },
     { id: '4', nombre: 'Coco',  raza: 'Golden Retriever',  anio: 1, fechaPerdida: '2024-04-28', distrito: 'La Molina',  descripcion: 'Cachorro dorado, muy activo',     contacto: '999777888', estado: 'aprobado',   fechaRegistro: '2024-04-28' },
   ];
+
+  private solicitudesBaja: SolicitudBaja[] = [];
 
   private informes: Informe[] = [
     { mascotaId: '3', descripcion: 'Lo encontré cerca al parque Kennedy', contacto: '987654321', fecha: '2024-05-12', estado: 'pendiente' },
@@ -69,6 +79,21 @@ export class MascotaService {
     if (inf) inf.estado = 'rechazado';
     const m = this.mascotas.find(x => x.id === mascotaId);
     if (m) m.estado = 'buscado';
+    return of({ success: true });
+  }
+
+  reportarBaja(s: Omit<SolicitudBaja, 'estado'>): Observable<any> {
+    this.solicitudesBaja.push({ ...s, estado: 'pendiente' });
+    return of({ success: true });
+  }
+
+  listarBajas(): Observable<SolicitudBaja[]> { return of([...this.solicitudesBaja]); }
+
+  procesarBaja(mascotaId: string): Observable<any> {
+    const s = this.solicitudesBaja.find(b => b.mascotaId === mascotaId);
+    if (s) s.estado = 'procesado';
+    const m = this.mascotas.find(x => x.id === mascotaId);
+    if (m) m.estado = 'baja';
     return of({ success: true });
   }
 }
