@@ -10,7 +10,7 @@ frontend:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: dist/grupo4-tb1/browser
+    baseDirectory: dist/GRUPO4-TB1/browser
     files:
       - '**/*'
   cache:
