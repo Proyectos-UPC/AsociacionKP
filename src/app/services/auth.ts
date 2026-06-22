@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
+
   private readonly USUARIO = 'admin';
   private readonly CONTRASENA = 'UPC2026';
   private _autenticado = false;
