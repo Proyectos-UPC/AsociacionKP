@@ -17,8 +17,9 @@
     </div>
   </div>
 
-  <div class="toast toast-ok" *ngIf="accionExitosa === 'aprobado'">✅ Caso aprobado — mascota marcada como reunida</div>
+  <div class="toast toast-ok"  *ngIf="accionExitosa === 'aprobado'">✅ Caso aprobado — mascota marcada como reunida</div>
   <div class="toast toast-err" *ngIf="accionExitosa === 'rechazado'">❌ Informe rechazado — mascota sigue en búsqueda</div>
+  <div class="toast toast-ok"  *ngIf="accionExitosa === 'baja'">🗂️ Baja procesada — el registro fue dado de baja</div>
 
   <div class="loader" *ngIf="cargando">Cargando informes...</div>
 
@@ -53,6 +54,60 @@
         <div class="informe-actions">
           <button class="btn btn-teal" (click)="aprobar(inf.mascotaId)">✅ Aprobar — reunida</button>
           <button class="btn btn-outline btn-danger" (click)="rechazar(inf.mascotaId)">❌ Rechazar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="!cargando" style="margin-top:2.5rem;">
+    <h2 class="section-label">Solicitudes de baja por fallecimiento</h2>
+
+    <div class="stat-mini stat-warn" style="display:inline-flex;margin-bottom:1rem;">
+      <span class="stat-n">{{ bajasPendientes.length }}</span>
+      <span class="stat-l">Pendientes de baja</span>
+    </div>
+
+    <div class="empty-pendiente" *ngIf="bajasPendientes.length === 0">
+      <div class="empty-icon">✅</div>
+      <p>Sin solicitudes de baja pendientes.</p>
+    </div>
+
+    <div class="informe-list" *ngIf="bajasPendientes.length > 0">
+      <div class="informe-item card" *ngFor="let baja of bajasPendientes">
+        <div class="informe-left">
+          <div class="inf-mascota-emoji">🐾</div>
+          <div>
+            <div class="inf-nombre">{{ getMascota(baja.mascotaId)?.nombre || 'Mascota #'+baja.mascotaId }}</div>
+            <div class="inf-meta">📍 {{ getMascota(baja.mascotaId)?.distrito }}</div>
+          </div>
+        </div>
+        <div class="informe-body">
+          <div class="inf-label">Motivo</div>
+          <p class="inf-desc">{{ baja.motivo }}</p>
+          <div class="inf-label">Contacto del dueño</div>
+          <p class="inf-contact">📞 {{ baja.contacto }}</p>
+          <div class="inf-label">Fecha de solicitud</div>
+          <p class="inf-fecha">🗓 {{ baja.fecha }}</p>
+        </div>
+        <div class="informe-actions">
+          <button class="btn btn-outline btn-danger" (click)="procesarBaja(baja.mascotaId)">🗂️ Procesar baja</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="informe-list" *ngIf="bajasResueltas.length > 0" style="margin-top:1rem;opacity:0.6">
+      <div class="informe-item informe-resuelta card" *ngFor="let baja of bajasResueltas">
+        <div class="informe-left">
+          <div class="inf-mascota-emoji">🐾</div>
+          <div>
+            <div class="inf-nombre">{{ getMascota(baja.mascotaId)?.nombre || 'Mascota #'+baja.mascotaId }}</div>
+          </div>
+        </div>
+        <div class="informe-body">
+          <p class="inf-desc">{{ baja.motivo }}</p>
+        </div>
+        <div class="informe-actions">
+          <span class="badge badge-encontrado">Baja procesada ✓</span>
         </div>
       </div>
     </div>

@@ -20,6 +20,16 @@
 .success-card p { font-size: 14px; color: var(--gray-600); margin-bottom: 2rem; }
 .success-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+.foto-upload-area { border: 2px dashed var(--gray-200); border-radius: var(--radius-md); overflow: hidden; background: var(--gray-50, #fafafa); }
+.foto-placeholder { padding: 1.75rem 1rem; text-align: center; }
+.foto-icon { font-size: 32px; margin-bottom: 6px; }
+.foto-placeholder p { font-size: 13px; color: var(--gray-400); margin-bottom: 10px; }
+.foto-input-hidden { display: none; }
+.foto-preview { position: relative; }
+.foto-preview img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.btn-remove-foto { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 13px; line-height: 1; }
+.btn-remove-foto:hover { background: rgba(0,0,0,0.8); }
+
 @media (max-width: 768px) {
   .registro-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
