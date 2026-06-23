@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MascotaService, Mascota } from '../../services/mascota';
-// Importación corregida al nombre exacto de la clase exportada
 import { MascotaCard } from '../../components/mascota-card/mascota-card';
 
 @Component({
   selector: 'app-buscar-mascota',
   standalone: true,
-  imports: [FormsModule, CommonModule, MascotaCard], // Declaración actualizada
+  imports: [FormsModule, CommonModule, RouterLink, MascotaCard],
   templateUrl: './buscar-mascota.html',
   styleUrls: ['./buscar-mascota.css']
 })
@@ -26,8 +26,8 @@ export class BuscarMascota implements OnInit {
 
   ngOnInit() {
     this.svc.listarMascotas().subscribe(list => {
-      this.todas = list;
-      this.filtradas = list;
+      this.todas = list.filter(m => m.estado !== 'baja');
+      this.filtradas = [...this.todas];
       this.cargando = false;
     });
   }
