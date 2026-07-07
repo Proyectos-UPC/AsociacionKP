@@ -15,3 +15,4 @@ export const routes: Routes = [
   { path: 'login',      component: Login },
   { path: 'soporte',    component: PanelSoporte, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
+];
