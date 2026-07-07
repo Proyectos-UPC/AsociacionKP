@@ -1,11 +1,99 @@
-.mcard { background:#fff; border-radius:var(--radius-lg); border:1px solid var(--gray-100); overflow:hidden; transition:box-shadow .2s,transform .2s; display:flex; flex-direction:column; }
-.mcard:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
-.mcard-img { background:var(--brand-light); height:130px; display:flex; align-items:center; justify-content:center; position:relative; }
-.mcard-emoji { font-size:56px; }
-.mcard-img .badge { position:absolute; top:10px; right:10px; }
-.mcard-body { padding:1rem 1.1rem; flex:1; display:flex; flex-direction:column; gap:6px; }
-.mcard-name { font-size:17px; font-weight:700; }
-.mcard-meta { display:flex; flex-wrap:wrap; gap:8px; font-size:12px; color:var(--gray-600); }
-.mcard-desc { font-size:13px; color:var(--gray-600); flex:1; }
-.mcard-btn { width:100%; justify-content:center; margin-top:8px; font-size:13px; padding:8px; }
-.badge-aprobado { background:var(--purple-light); color:var(--purple); }
+.mcard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mcard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.mcard-img {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.foto-mascota {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.badge-buscado { color: #D9381E; background: #FDE8E4; }
+.badge-encontrado { color: #F29900; background: #FEF3C7; }
+.badge-aprobado { color: #1E8E3E; background: #E6F4EA; }
+
+.mcard-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.mcard-name {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 0.5rem 0;
+  color: #1a1a1a;
+}
+
+.mcard-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.mcard-desc {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.mcard-btn {
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  background: #D9381E;
+  color: white;
+  border: none;
+  display: block;
+  transition: background 0.2s ease;
+}
+
+.mcard-btn:hover {
+  background: #B82F18;
+}
