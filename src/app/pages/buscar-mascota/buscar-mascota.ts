@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { MascotaService, Mascota } from '../../services/mascota';
 import { MascotaCard } from '../../components/mascota-card/mascota-card';
 
@@ -27,8 +28,8 @@ export class BuscarMascota implements OnInit {
 
   ngOnInit() {
     this.svc.listarMascotas().subscribe(list => {
-      this.todas = list;
-      this.filtradas = list;
+      this.todas = list.filter(m => m.estado !== 'baja');
+      this.filtradas = [...this.todas];
       this.cargando = false;
     });
   }
