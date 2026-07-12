@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
@@ -18,20 +18,19 @@ export class Login {
   cargando = false;
   mostrarContrasena = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ingresar() {
     this.error = false;
     this.cargando = true;
 
-    setTimeout(() => {
-      const ok = this.auth.login(this.usuario, this.contrasena);
-      if (ok) {
-        this.router.navigate(['/soporte']);
-      } else {
+    this.auth.login(this.usuario, this.contrasena).subscribe({
+      next: () => this.router.navigate(['/soporte']),
+      error: () => {
         this.error = true;
         this.cargando = false;
+        this.cdr.markForCheck();
       }
-    }, 800);
+    });
   }
 }

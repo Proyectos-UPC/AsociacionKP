@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { MascotaService, Mascota } from '../../services/mascota';
@@ -90,14 +90,19 @@ testimonios = [
 
   @ViewChild('carousel') carousel!: ElementRef;
 
-  constructor(private svc: MascotaService) {}
+  constructor(private svc: MascotaService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.svc.listarMascotas().subscribe(list => {
-      this.recientes = list.slice(0, 3);
-      this.stats.buscados    = list.filter(m => m.estado === 'buscado').length;
-      this.stats.encontrados = list.filter(m => m.estado === 'encontrado').length;
-      this.stats.aprobados   = list.filter(m => m.estado === 'aprobado').length;
+    this.svc.listarMascotas({ sort: '-fechaRegistro', pageSize: 3 }).subscribe(res => {
+      this.recientes = res.data;
+      this.cdr.markForCheck();
+    });
+
+    this.svc.getStats().subscribe(stats => {
+      this.stats.buscados    = stats.buscado;
+      this.stats.encontrados = stats.encontrado;
+      this.stats.aprobados   = stats.aprobado;
+      this.cdr.markForCheck();
     });
 
     this.iniciarCarruselTestimonios();

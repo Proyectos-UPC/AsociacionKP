@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface Mascota {
   id?: string;
@@ -13,89 +16,139 @@ export interface Mascota {
   estado: 'buscado' | 'encontrado' | 'aprobado' | 'baja';
   fechaRegistro?: string;
   imagen: string;
-  
+}
+
+export interface MascotaCreate {
+  nombre: string;
+  razaCodigo: string;
+  anio: number;
+  fechaPerdida: string;
+  distritoCodigo: string;
+  descripcion: string;
+  contacto: string;
+  imagen?: string | null;
+}
+
+export interface MascotaResumen {
+  nombre: string;
+  raza: string;
+  distrito: string;
+  imagen: string | null;
 }
 
 export interface SolicitudBaja {
+  id: string;
   mascotaId: string;
   motivo: string;
   contacto: string;
   fecha: string;
   estado: 'pendiente' | 'procesado';
+  mascota?: MascotaResumen;
 }
 
 export interface Informe {
+  id: string;
   mascotaId: string;
   descripcion: string;
   contacto: string;
   fecha: string;
   estado: 'pendiente' | 'aprobado' | 'rechazado';
+  mascota?: MascotaResumen;
 }
+
+export interface Pagination {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+}
+
+export interface MascotaFiltros {
+  texto?: string;
+  estado?: string;
+  razaCodigo?: string;
+  distritoCodigo?: string;
+  sort?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export interface MascotaListResponse {
+  data: Mascota[];
+  pagination: Pagination;
+}
+
+export interface MascotaStats {
+  buscado: number;
+  encontrado: number;
+  aprobado: number;
+  baja: number;
+  total: number;
+}
+
+const LISTADO_ADMIN_PAGE_SIZE = 50;
 
 @Injectable({ providedIn: 'root' })
 export class MascotaService {
+  private readonly apiUrl = environment.apiUrl;
 
- private mascotas: Mascota[] = [
-  { id: '1', nombre: 'Toby', raza: 'Labrador', anio: 3, fechaPerdida: '2026-05-10', distrito: 'Miraflores', descripcion: 'Labrador color miel con collar azul y placa de identificación. Es muy amigable y suele acercarse a las personas. Fue visto por última vez cerca del Parque Kennedy.', contacto: '999111222', estado: 'buscado', fechaRegistro: '2026-05-10', imagen: 'https://images.pexels.com/photos/30537223/pexels-photo-30537223.jpeg' },
-  { id: '2', nombre: 'Luna', raza: 'Beagle', anio: 2, fechaPerdida: '2026-05-08', distrito: 'San Isidro', descripcion: 'Beagle de tamaño mediano con manchas marrones y blancas. Es tímida y puede asustarse con facilidad. Llevaba un collar rojo cuando desapareció.', contacto: '999333444', estado: 'buscado', fechaRegistro: '2026-05-08', imagen: 'https://images.pexels.com/photos/32519887/pexels-photo-32519887.jpeg' },
-  { id: '3', nombre: 'Rocky', raza: 'Mestizo', anio: 5, fechaPerdida: '2026-01-01', distrito: 'Surco', descripcion: 'Perro mestizo de color negro con las cuatro patas blancas y una pequeña mancha blanca en el pecho. Es tranquilo y responde a su nombre.', contacto: '999555666', estado: 'encontrado', fechaRegistro: '2026-05-01', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoiRp_RvNLMIkGpcMMjHH28oGh1jY-Pnlus494z3bEbh-WkFHJxZbEBK0&s=10' },
-  { id: '4', nombre: 'Coco', raza: 'Golden Retriever', anio: 1, fechaPerdida: '2026-03-28', distrito: 'La Molina', descripcion: 'Cachorro Golden Retriever de pelaje dorado, muy juguetón y enérgico. Llevaba un collar verde con una placa de identificación.', contacto: '999777888', estado: 'aprobado', fechaRegistro: '2026-04-28', imagen: 'https://images.pexels.com/photos/30560317/pexels-photo-30560317.jpeg' },
-];
+  constructor(private http: HttpClient) {}
 
-  private solicitudesBaja: SolicitudBaja[] = [];
-
-  private informes: Informe[] = [
-    { mascotaId: '3', descripcion: 'Lo encontré cerca al parque Kennedy', contacto: '987654321', fecha: '2026-05-12', estado: 'pendiente' },
-    { mascotaId: '4', descripcion: 'Está en mi casa, lo rescaté',         contacto: '912345678', fecha: '2026-05-05', estado: 'aprobado' },
-  ];
-
-  listarMascotas(): Observable<Mascota[]> { return of([...this.mascotas]); }
-
-  getMascota(id: string): Observable<Mascota | undefined> { return of(this.mascotas.find(m => m.id === id)); }
-
-  registrarMascota(m: Mascota): Observable<any> {
-    const nueva: Mascota = { ...m, id: Date.now().toString(), estado: 'buscado', fechaRegistro: new Date().toISOString().split('T')[0] };
-    this.mascotas.push(nueva);
-    return of({ success: true, id: nueva.id });
+  listarMascotas(filtros: MascotaFiltros = {}): Observable<MascotaListResponse> {
+    let params = new HttpParams();
+    for (const [clave, valor] of Object.entries(filtros)) {
+      if (valor !== undefined && valor !== null && valor !== '') {
+        params = params.set(clave, String(valor));
+      }
+    }
+    return this.http.get<MascotaListResponse>(`${this.apiUrl}/mascotas`, { params });
   }
 
-  enviarInforme(inf: Omit<Informe, 'estado'>): Observable<any> {
-    this.informes.push({ ...inf, estado: 'pendiente' });
-    const m = this.mascotas.find(x => x.id === inf.mascotaId);
-    if (m) m.estado = 'encontrado';
-    return of({ success: true });
+  getMascota(id: string): Observable<Mascota> {
+    return this.http.get<Mascota>(`${this.apiUrl}/mascotas/${id}`);
   }
 
-  listarInformes(): Observable<Informe[]> { return of([...this.informes]); }
-
-  aprobarInforme(mascotaId: string): Observable<any> {
-    const inf = this.informes.find(i => i.mascotaId === mascotaId);
-    if (inf) inf.estado = 'aprobado';
-    const m = this.mascotas.find(x => x.id === mascotaId);
-    if (m) m.estado = 'aprobado';
-    return of({ success: true });
+  getStats(): Observable<MascotaStats> {
+    return this.http.get<MascotaStats>(`${this.apiUrl}/mascotas/stats`);
   }
 
-  rechazarInforme(mascotaId: string): Observable<any> {
-    const inf = this.informes.find(i => i.mascotaId === mascotaId);
-    if (inf) inf.estado = 'rechazado';
-    const m = this.mascotas.find(x => x.id === mascotaId);
-    if (m) m.estado = 'buscado';
-    return of({ success: true });
+  registrarMascota(m: MascotaCreate): Observable<Mascota> {
+    return this.http.post<Mascota>(`${this.apiUrl}/mascotas`, m);
   }
 
-  reportarBaja(s: Omit<SolicitudBaja, 'estado'>): Observable<any> {
-    this.solicitudesBaja.push({ ...s, estado: 'pendiente' });
-    return of({ success: true });
+  enviarInforme(mascotaId: string, inf: { descripcion: string; contacto: string }): Observable<Informe> {
+    return this.http.post<Informe>(`${this.apiUrl}/mascotas/${mascotaId}/informes`, inf);
   }
 
-  listarBajas(): Observable<SolicitudBaja[]> { return of([...this.solicitudesBaja]); }
+  listarInformes(estado?: string): Observable<Informe[]> {
+    let params = new HttpParams().set('pageSize', String(LISTADO_ADMIN_PAGE_SIZE));
+    if (estado) params = params.set('estado', estado);
+    return this.http
+      .get<{ data: Informe[]; pagination: Pagination }>(`${this.apiUrl}/informes`, { params })
+      .pipe(map(res => res.data));
+  }
 
-  procesarBaja(mascotaId: string): Observable<any> {
-    const s = this.solicitudesBaja.find(b => b.mascotaId === mascotaId);
-    if (s) s.estado = 'procesado';
-    const m = this.mascotas.find(x => x.id === mascotaId);
-    if (m) m.estado = 'baja';
-    return of({ success: true });
+  aprobarInforme(informeId: string): Observable<Informe> {
+    return this.http.patch<Informe>(`${this.apiUrl}/informes/${informeId}`, { estado: 'aprobado' });
+  }
+
+  rechazarInforme(informeId: string): Observable<Informe> {
+    return this.http.patch<Informe>(`${this.apiUrl}/informes/${informeId}`, { estado: 'rechazado' });
+  }
+
+  reportarBaja(mascotaId: string, s: { motivo: string; contacto: string }): Observable<SolicitudBaja> {
+    return this.http.post<SolicitudBaja>(`${this.apiUrl}/mascotas/${mascotaId}/solicitudes-baja`, s);
+  }
+
+  listarBajas(estado?: string): Observable<SolicitudBaja[]> {
+    let params = new HttpParams().set('pageSize', String(LISTADO_ADMIN_PAGE_SIZE));
+    if (estado) params = params.set('estado', estado);
+    return this.http
+      .get<{ data: SolicitudBaja[]; pagination: Pagination }>(`${this.apiUrl}/solicitudes-baja`, { params })
+      .pipe(map(res => res.data));
+  }
+
+  procesarBaja(bajaId: string): Observable<SolicitudBaja> {
+    return this.http.patch<SolicitudBaja>(`${this.apiUrl}/solicitudes-baja/${bajaId}`, { estado: 'procesado' });
   }
 }

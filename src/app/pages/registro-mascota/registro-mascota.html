@@ -20,11 +20,11 @@
         </div>
         <div class="form-group">
           <label>Raza *</label>
-          <select formControlName="raza">
+          <select formControlName="razaCodigo">
             <option value="">Selecciona una raza</option>
-            <option *ngFor="let r of razas" [value]="r">{{ r }}</option>
+            <option *ngFor="let r of razas" [value]="r.codigo">{{ r.nombre }}</option>
           </select>
-          <div class="error-msg" *ngIf="f['raza'].invalid && f['raza'].touched">Selecciona la raza.</div>
+          <div class="error-msg" *ngIf="f['razaCodigo'].invalid && f['razaCodigo'].touched">Selecciona la raza.</div>
         </div>
       </div>
 
@@ -43,11 +43,11 @@
 
       <div class="form-group">
         <label>Distrito donde se perdió *</label>
-        <select formControlName="distrito">
+        <select formControlName="distritoCodigo">
           <option value="">Selecciona el distrito</option>
-          <option *ngFor="let d of distritos" [value]="d">{{ d }}</option>
+          <option *ngFor="let d of distritos" [value]="d.codigo">{{ d.nombre }}</option>
         </select>
-        <div class="error-msg" *ngIf="f['distrito'].invalid && f['distrito'].touched">Selecciona el distrito.</div>
+        <div class="error-msg" *ngIf="f['distritoCodigo'].invalid && f['distritoCodigo'].touched">Selecciona el distrito.</div>
       </div>
 
       <div class="form-group">
