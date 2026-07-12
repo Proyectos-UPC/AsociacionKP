@@ -58,4 +58,5 @@ export class PanelSoporte implements OnInit {
       setTimeout(() => this.accionExitosa = null, 2500);
     });
   }
+
 }

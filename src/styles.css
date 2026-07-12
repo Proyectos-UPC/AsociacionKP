@@ -78,7 +78,7 @@ a { text-decoration: none; color: inherit; }
   border-radius: 20px;
 }
 .badge-buscado  { background: var(--amber-light); color: var(--amber); }
-.badge-encontrado { background: var(--teal-light); color: var(--teal); }
+.badge-encontrado { background: var(--teal-light); color: var(--teal); display: inline-flex; align-items: center; justify-content: center; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 600; text-align: center; min-width: 100px; }
 .badge-pendiente { background: var(--purple-light); color: var(--purple); }
 
 .form-group { margin-bottom: 1.25rem; }

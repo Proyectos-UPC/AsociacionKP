@@ -12,7 +12,9 @@
   <div class="detalle-layout" *ngIf="!cargando && mascota">
     <div class="detalle-main">
       <div class="mascota-hero card">
-        <div class="mascota-foto">🐶</div>
+        <div class="mascota-foto">
+  <img [src]="mascota?.imagen" alt="Foto de {{ mascota?.nombre }}" class="foto-detalle-img">
+</div>
         <div class="mascota-info">
           <div class="mascota-nombre-row">
             <h1>{{ mascota?.nombre }}</h1>
@@ -148,7 +150,7 @@
       </div>
 
       <div class="baja-card card baja-procesada" *ngIf="mascota?.estado === 'baja'">
-        <div class="baja-icon">🗂️</div>
+        <div class="baja-icon">🕊️</div>
         <h3>Baja procesada</h3>
         <p>Este registro fue dado de baja y ya no aparece en las búsquedas activas.</p>
       </div>
