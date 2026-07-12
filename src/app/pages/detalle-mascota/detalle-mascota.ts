@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
@@ -41,7 +41,8 @@ export class DetalleMascota implements OnInit {
     private route: ActivatedRoute,
     private svc: MascotaService,
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef
   ) {
     this.informeForm = this.fb.group({
       descripcion: ['', [Validators.required, Validators.minLength(10)]],
@@ -55,7 +56,11 @@ export class DetalleMascota implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id') || '';
-    this.svc.getMascota(id).subscribe(m => { this.mascota = m; this.cargando = false; });
+    this.svc.getMascota(id).subscribe(m => {
+      this.mascota = m;
+      this.cargando = false;
+      this.cdr.markForCheck();
+    });
   }
 
   get f()  { return this.informeForm.controls; }
@@ -75,22 +80,25 @@ export class DetalleMascota implements OnInit {
 
   enviarInforme() {
     if (this.informeForm.invalid) { this.informeForm.markAllAsTouched(); return; }
-    this.svc.enviarInforme({
-      mascotaId: this.mascota!.id!,
+    this.svc.enviarInforme(this.mascota!.id!, {
       descripcion: this.f['descripcion'].value,
-      contacto: this.f['contacto'].value,
-      fecha: new Date().toISOString().split('T')[0]
-    }).subscribe(() => { this.informeEnviado = true; });
+      contacto: this.f['contacto'].value
+    }).subscribe(() => {
+      this.informeEnviado = true;
+      this.cdr.markForCheck();
+    });
   }
 
   enviarBaja() {
     if (this.bajaForm.invalid) { this.bajaForm.markAllAsTouched(); return; }
-    this.svc.reportarBaja({
-      mascotaId: this.mascota!.id!,
+    this.svc.reportarBaja(this.mascota!.id!, {
       motivo: this.bf['motivo'].value,
-      contacto: this.bf['contacto'].value,
-      fecha: new Date().toISOString().split('T')[0]
-    }).subscribe(() => { this.bajaEnviada = true; this.mostrarFormBaja = false; });
+      contacto: this.bf['contacto'].value
+    }).subscribe(() => {
+      this.bajaEnviada = true;
+      this.mostrarFormBaja = false;
+      this.cdr.markForCheck();
+    });
   }
 
   get estadoLabel() {
