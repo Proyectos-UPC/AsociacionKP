@@ -30,6 +30,46 @@
 .btn-remove-foto { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.55); color: #fff; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 13px; line-height: 1; }
 .btn-remove-foto:hover { background: rgba(0,0,0,0.8); }
 
+.map-group {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.help-text {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  margin-top: -0.25rem;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.registro-mapa {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+
+
+.map-overlay-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  font-size: 32px;
+  pointer-events: none; /* Permite que el usuario interactúe con el mapa subyacente */
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+
 @media (max-width: 768px) {
   .registro-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }

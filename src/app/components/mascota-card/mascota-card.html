@@ -1,13 +1,18 @@
 <div class="mcard">
   <div class="mcard-img">
-    <span class="mcard-emoji">🐶</span>
+
+    <!-- 👇 solo agrega *ngIf aquí y la línea de abajo -->
+    <img *ngIf="mascota.imagen" [src]="mascota.imagen" alt="Foto de {{ mascota.nombre }}" class="foto-mascota">
+    <span *ngIf="!mascota.imagen" class="mcard-emoji">🐶</span>
+
     <span class="badge"
-      [class.badge-buscado]="mascota.estado==='buscado'"
-      [class.badge-encontrado]="mascota.estado==='encontrado'"
-      [class.badge-aprobado]="mascota.estado==='aprobado'">
+      [class.badge-buscado]="mascota.estado === 'buscado'"
+      [class.badge-encontrado]="mascota.estado === 'encontrado'"
+      [class.badge-aprobado]="mascota.estado === 'aprobado'">
       {{ estadoLabel }}
     </span>
   </div>
+  
   <div class="mcard-body">
     <h3 class="mcard-name">{{ mascota.nombre }}</h3>
     <div class="mcard-meta">
