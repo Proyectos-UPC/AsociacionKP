@@ -27,8 +27,8 @@ export class BuscarMascota implements OnInit {
 
   ngOnInit() {
     this.svc.listarMascotas().subscribe(list => {
-      this.todas = list;
-      this.filtradas = list;
+      this.todas = list.filter(m => m.estado !== 'baja');
+      this.filtradas = [...this.todas];
       this.cargando = false;
     });
   }
