@@ -1,74 +1,184 @@
-<section class="hero">
-  <div class="container">
+<div class="hero">
+  <div class="container hero-container">
     <div class="hero-content">
-      <span class="hero-eyebrow">🐾 AsociacionKP</span>
-      <h1>Ayuda a reunir<br><span class="hero-accent">mascotas con sus familias</span></h1>
-      <p class="hero-sub">Plataforma centralizada para reportar, buscar y gestionar el reencuentro de perros perdidos o abandonados en el Perú.</p>
+      <span class="hero-eyebrow">Red de búsqueda activa</span>
+      <h1>Reuniendo huellas, <br><span class="hero-accent">conectando familias</span></h1>
+      <p class="hero-sub">Si perdiste a tu compañero o encontraste a uno sin rumbo, nuestra comunidad te ayuda a reportarlo y localizarlo en tiempo real.</p>
       <div class="hero-actions">
-        <a routerLink="/registro" class="btn btn-primary">Reportar mascota perdida</a>
-        <a routerLink="/buscar" class="btn btn-outline">Buscar mascota</a>
+        <a routerLink="/registro" class="btn btn-primary">Reportar pérdida</a>
+        <a routerLink="/buscar" class="btn btn-outline">Ver mascotas</a>
       </div>
     </div>
-    <div class="hero-illustration">🐕</div>
+    <div class="hero-illustration">
+      <img src="https://static.wixstatic.com/media/788bd3_a92001bdc6ae469aa312037254e43b6f~mv2.png/v1/fill/w_568,h_378,al_c,lg_1,q_85,enc_avif,quality_auto/788bd3_a92001bdc6ae469aa312037254e43b6f~mv2.png">
+    </div>
+  </div>
+</div>
+<!------------------------------------------------------------>
+<div class="stats-bar dark-theme">
+  <div class="container stats-grid-4">
+    <div class="stat-item">
+      <div class="stat-icon" style="color: #F29900;">🔍</div>
+      <div class="stat-data">
+        <span class="stat-num">{{ stats?.buscados || 2 }}</span>
+        <span class="stat-title">EN BÚSQUEDA</span>
+        <span class="stat-desc">Mascotas desaparecidas</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon" style="color: #F2C94C;">🔔</div>
+      <div class="stat-data">
+        <span class="stat-num">{{ stats?.encontrados || 1 }}</span>
+        <span class="stat-title">HALLAZGOS</span>
+        <span class="stat-desc">Mascotas encontradas</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon" style="color: #27AE60;">👥</div>
+      <div class="stat-data">
+        <span class="stat-num">{{ stats?.aprobados || 1 }}</span>
+        <span class="stat-title">REENCUENTROS</span>
+        <span class="stat-desc">Familias reunidas</span>
+      </div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-icon" style="color: #9B51E0;">💜</div>
+      <div class="stat-data">
+        <span class="stat-num">97%</span>
+        <span class="stat-title">CASOS ATENDIDOS</span>
+        <span class="stat-desc">Gracias a nuestra comunidad</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------------------------------------------------>
+<section class="pawtrack-features">
+    <div class="feature-card large">
+        <img src="https://img.magnific.com/foto-gratis/vista-superior-manos-escribiendo-teclado_23-2150281045.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+        <div class="overlay">
+            <h3>1. Registra</h3>
+            <p>Registra la información y fotografía de tu mascota para iniciar la búsqueda y compartir el caso con nuestra comunidad solidaria.</p>
+        </div>
+    </div>
+    <div class="feature-card">
+        <img src="https://img.magnific.com/psd-gratis/plantilla-invitacion-mascotas-perdidas_23-2151164999.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+        <div class="overlay">
+            <h3>2. Difunde</h3>
+            <p>El reporte se publica para que la comunidad ayude en la búsqueda.</p>
+        </div>
+    </div>
+    <div class="feature-card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSFkGttxTVcHp_19T8N_lHEXTAW5WeiGQxnGbQ3pukpw&s=10" alt="">
+        <div class="overlay">
+            <h3>3. Reporta hallazgo</h3>
+            <p>Quien la encuentre puede registrar la ubicación y detalles.</p>
+        </div>
+    </div>
+    <div class="feature-card wide">
+        <img src="https://img.magnific.com/fotos-premium/pago-linea-marketing-digital-telefono-inteligente-pago-facturas-bancarias-linea-boton-concepto-aprobado-tarjeta-credito-e-icono-conexion-red-fondo-pantalla-virtual-tecnologia-empresarial_162459-3855.jpg?semt=ais_hybrid&w=740&q=80" alt="">
+        <div class="overlay">
+            <h3>4. KP valida</h3>
+            <p>Nuestro equipo verifica la información reportada y confirma el reencuentro para garantizar la seguridad y transparencia del proceso.</p>
+        </div>
+    </div>
+</section>
+<!------------------------------------------------------------>
+<section class="map-preview-section container">
+  <div class="section-header map-header flex-between">
+    <h2 class="section-title">📍 Mapa de mascotas encontradas</h2>
+  </div>
+  <div class="map-showcase card">
+    <div class="map-wrapper">
+  <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-77.10,-12.05,-77.00,-11.95&layer=mapnik" class="map-iframe" scrolling="no"></iframe>
+  <div class="map-pin-simulated pin-pet" style="top: 35%; left: 45%; border-color: #d9381e;">
+    <img src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=100" alt="Perro">
+  </div>
+  <div class="map-pin-simulated pin-pet" style="top: 55%; left: 60%; border-color: #20c997;">
+    <img src="https://thumbs.dreamstime.com/b/un-retrato-de-un-perro-excelente-en-naturaleza-93644776.jpg?w=768&auto=compress&cs=tinysrgb&w=100" alt="Perro">
+  </div>
+  <div class="map-pin-simulated pin-pet" style="top: 75%; left: 70%; border-color: #d9381e;">
+    <img src="https://thumbs.dreamstime.com/b/collie-de-frontera-del-animal-dom%C3%A9stico-del-perro-10107835.jpg?w=768&auto=compress&cs=tinysrgb&w=100" alt="Perro">
+  </div>
+  <div class="map-pin-simulated pin-pet" style="top: 45%; left: 88%; border-color: #888;">
+    <img src="https://thumbs.dreamstime.com/b/retrato-del-perro-excelente-con-ojos-azules-121983725.jpg?w=768&auto=compress&cs=tinysrgb&w=100" alt="Perro">
+  </div>
+  <div class="map-pin-simulated pin-cluster" style="top: 60%; left: 35%;">
+    2
+  </div>
+  <div class="map-pin-simulated pin-cluster" style="top: 25%; left: 65%;">
+    3
+  </div>
+  <div class="floating-pet-card">
+    <img src="https://images.pexels.com/photos/2253275/pexels-photo-2253275.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Max" class="floating-img">
+    <div class="floating-info">
+      <h4 class="floating-name">Max</h4>
+      <p class="floating-detail">📍 San Martín de Porres</p>
+      <p class="floating-detail">🕒 Encontrado: 15/07/2026</p>
+      <p class="floating-detail">👤 Reportado por: Juan Pérez</p>
+      <p class="floating-detail">📞 987 654 321</p>
+      <button class="btn btn-primary btn-sm floating-btn">Ver detalles</button>
+    </div>
+  </div>
+</div>
+    <div class="map-legend">
+      <span class="legend-item"><span class="dot red"></span> Reciente</span>
+      <span class="legend-item"><span class="dot teal"></span> Este mes</span>
+      <span class="legend-item"><span class="dot gray"></span> Más antiguos</span>
+      <span class="legend-item"><span class="dot blue"></span> Tu ubicación</span>
+    </div>
   </div>
 </section>
-
-<section class="stats-bar">
-  <div class="container stats-grid">
-    <div class="stat"><span class="stat-num">{{ stats.buscados }}</span><span class="stat-label">En búsqueda</span></div>
-    <div class="stat"><span class="stat-num">{{ stats.encontrados }}</span><span class="stat-label">Reportes de hallazgo</span></div>
-    <div class="stat stat-success"><span class="stat-num">{{ stats.aprobados }}</span><span class="stat-label">Reunidos ✓</span></div>
+<!------------------------------------------------------------>
+<section class="recientes-section container">
+  <div class="section-header">
+    <h2 class="section-title">Últimos reportes</h2>
+    <a routerLink="/buscar" class="btn btn-outline">Ver todos</a>
+  </div>
+  <div class="cards-grid">
+    <app-mascota-card *ngFor="let m of recientes" [mascota]="m"></app-mascota-card>
   </div>
 </section>
-
-<section class="steps-section">
-  <div class="container">
-    <h2 class="section-title">¿Cómo funciona?</h2>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-icon" style="background:var(--brand-light)">📋</div>
-        <h3>1. Registra</h3>
-        <p>Completa el formulario con los datos de tu mascota: nombre, raza, zona y descripción.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon" style="background:var(--amber-light)">🔍</div>
-        <h3>2. Difunde</h3>
-        <p>El caso queda publicado para que cualquier persona pueda encontrarlo.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon" style="background:var(--teal-light)">📝</div>
-        <h3>3. Reporta hallazgo</h3>
-        <p>Quien la encuentre envía un informe con dónde y cómo la encontró.</p>
-      </div>
-      <div class="step">
-        <div class="step-icon" style="background:var(--purple-light)">✅</div>
-        <h3>4. KP valida</h3>
-        <p>El equipo de AsociacionKP revisa y aprueba el caso como reunido.</p>
+<!------------------------------------------------------------>
+<section class="cta-section container">
+  <div class="cta-box">
+    <div>
+      <h2>¿Encontraste un perro perdido?</h2>
+      <p>Busca en nuestra base de datos si alguien lo está buscando y envía un informe de hallazgo.</p>
+    </div>
+    <a routerLink="/buscar" class="btn btn-primary">Buscar en la base de datos</a>
+  </div>
+</section>
+<!------------------------------------------------------------>
+<section class="alianzas-section container">
+  <div class="alianzas-box">
+    <div class="alianzas-header">
+      <button class="nav-btn" (click)="scrollLeft()">&#8249;</button>
+      <h2 class="section-title">Acreditaciones y Alianzas</h2>
+      <button class="nav-btn" (click)="scrollRight()">&#8250;</button>
+    </div>
+    <div class="carousel-container" #carousel>
+      <div class="carousel-item" *ngFor="let alianza of alianzas">
+        <div class="logo-placeholder">
+          <img [src]="alianza.logo" [alt]="alianza.nombre" onerror="this.style.display='none'">
+          <span *ngIf="!alianza.logo" class="fallback-text">{{ alianza.nombre }}</span>
+        </div>
+        <p class="alianza-desc">{{ alianza.descripcion }}</p>
       </div>
     </div>
   </div>
 </section>
-
-<section class="recientes-section">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">Casos recientes</h2>
-      <a routerLink="/buscar" class="btn btn-outline">Ver todos →</a>
-    </div>
-    <div class="cards-grid">
-      <app-mascota-card *ngFor="let m of recientes" [mascota]="m"></app-mascota-card>
-    </div>
+<!------------------------------------------------------------>
+<section class="testimonios-section container">
+  <div class="section-header center">
+    <h2 class="section-title">Familias Reencontradas</h2>
   </div>
-</section>
-
-<section class="cta-section">
-  <div class="container">
-    <div class="cta-box">
-      <div>
-        <h2>¿Encontraste un perro perdido?</h2>
-        <p>Busca en nuestra base de datos si alguien lo está buscando y envía un informe de hallazgo.</p>
+  <div class="testimonios-grid">
+    <div class="testimonio-card fade-in" *ngFor="let t of testimoniosVisibles">
+      <img [src]="t.foto" [alt]="t.mascota" class="testimonio-img">
+      <div class="testimonio-content">
+        <p class="testimonio-texto">{{ t.texto }}</p>
+        <span class="testimonio-autor">{{ t.autor }} y {{ t.mascota }}</span>
       </div>
-      <a routerLink="/buscar" class="btn btn-teal">Buscar dueño</a>
     </div>
   </div>
 </section>

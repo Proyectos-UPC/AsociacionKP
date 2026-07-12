@@ -85,6 +85,20 @@
         </div>
       </div>
 
+      <div class="form-group map-group">
+  <label>Ubicación exacta de pérdida *</label>
+  <p class="help-text">Arrastra el marcador en el mapa para indicar el punto exacto.</p>
+  <div class="map-container">
+    <iframe 
+      src="https://www.openstreetmap.org/export/embed.html?bbox=-77.116%2C-12.083%2C-76.953%2C-11.963&amp;layer=mapnik" 
+      class="registro-mapa" 
+      title="Seleccionar ubicación en el mapa"
+      loading="lazy">
+    </iframe>
+    <div class="map-overlay-pin">📍​</div>
+  </div>
+</div>
+
       <div class="form-actions">
         <button type="submit" class="btn btn-primary" [disabled]="cargando">
           <span *ngIf="!cargando">Registrar mascota perdida</span>
