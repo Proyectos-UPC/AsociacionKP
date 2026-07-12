@@ -13,3 +13,13 @@
 .empty-state h3 { font-size: 18px; font-weight: 700; margin-bottom: 0.5rem; }
 .empty-state p { font-size: 14px; color: var(--gray-600); margin-bottom: 1.5rem; }
 .loader { text-align: center; padding: 3rem; color: var(--gray-400); font-size: 14px; }
+
+@media (max-width: 640px) {
+  .filtros-bar { flex-direction: column; align-items: stretch; }
+  .filtro-search { min-width: unset; }
+  .filtros-selects { flex-direction: column; }
+  .filtros-selects select { width: 100%; }
+  .filtros-selects .btn { width: 100%; justify-content: center; }
+  .resultados-info { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .resultados-info .btn { width: 100%; justify-content: center; }
+}
