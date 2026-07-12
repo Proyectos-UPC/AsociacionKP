@@ -24,6 +24,14 @@ export interface SolicitudBaja {
   estado: 'pendiente' | 'procesado';
 }
 
+export interface SolicitudBaja {
+  mascotaId: string;
+  motivo: string;
+  contacto: string;
+  fecha: string;
+  estado: 'pendiente' | 'procesado';
+}
+
 export interface Informe {
   mascotaId: string;
   descripcion: string;
@@ -41,6 +49,8 @@ export class MascotaService {
   { id: '3', nombre: 'Rocky', raza: 'Mestizo', anio: 5, fechaPerdida: '2026-01-01', distrito: 'Surco', descripcion: 'Perro mestizo de color negro con las cuatro patas blancas y una pequeña mancha blanca en el pecho. Es tranquilo y responde a su nombre.', contacto: '999555666', estado: 'encontrado', fechaRegistro: '2026-05-01', imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoiRp_RvNLMIkGpcMMjHH28oGh1jY-Pnlus494z3bEbh-WkFHJxZbEBK0&s=10' },
   { id: '4', nombre: 'Coco', raza: 'Golden Retriever', anio: 1, fechaPerdida: '2026-03-28', distrito: 'La Molina', descripcion: 'Cachorro Golden Retriever de pelaje dorado, muy juguetón y enérgico. Llevaba un collar verde con una placa de identificación.', contacto: '999777888', estado: 'aprobado', fechaRegistro: '2026-04-28', imagen: 'https://images.pexels.com/photos/30560317/pexels-photo-30560317.jpeg' },
 ];
+
+  private solicitudesBaja: SolicitudBaja[] = [];
 
   private solicitudesBaja: SolicitudBaja[] = [];
 
