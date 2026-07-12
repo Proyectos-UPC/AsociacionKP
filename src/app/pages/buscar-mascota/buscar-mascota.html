@@ -18,14 +18,14 @@
         <option value="aprobado">Reunido ✓</option>
       </select>
 
-      <select [(ngModel)]="filtroDistrito" (ngModelChange)="filtrar()">
+      <select [(ngModel)]="filtroDistritoCodigo" (ngModelChange)="filtrar()">
         <option value="">Todos los distritos</option>
-        <option *ngFor="let d of distritos" [value]="d">{{ d }}</option>
+        <option *ngFor="let d of distritos" [value]="d.codigo">{{ d.nombre }}</option>
       </select>
 
-      <select [(ngModel)]="filtroRaza" (ngModelChange)="filtrar()">
+      <select [(ngModel)]="filtroRazaCodigo" (ngModelChange)="filtrar()">
         <option value="">Todas las razas</option>
-        <option *ngFor="let r of razas" [value]="r">{{ r }}</option>
+        <option *ngFor="let r of razas" [value]="r.codigo">{{ r.nombre }}</option>
       </select>
 
       <button class="btn btn-outline btn-sm" (click)="limpiar()">Limpiar</button>
